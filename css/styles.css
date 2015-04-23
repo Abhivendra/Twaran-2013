@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+body { background: url(images/004_Valentine_heart_shape_vector_illustration_QRJTJ_1004.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;}
+
+.bubblewrap{
+list-style-type:none;
+margin:0;
+padding:0;
+}
+
+.bubblewrap li{
+display:inline;
+width: 65px;
+height:60px;
+}
+
+.bubblewrap li img{
+width: 158px; /* width of each image.*/
+height: 75px; /* height of each image.*/
+border:0;
+margin: 12px; /*spacing between each image*/
+-webkit-transition:-webkit-transform 0.1s ease-in; /*animate transform property */
+-o-transition:-o-transform 0.1s ease-in; /*animate transform property in Opera */
+}
+
+.bubblewrap li img:hover{
+-moz-transform:scale(1.4); /*scale up image 1.8x*/
+-webkit-transform:scale(1.4);
+-o-transform:scale(1.8);
+}

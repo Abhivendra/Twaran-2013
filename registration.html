@@ -1,0 +1,509 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+
+<head>
+
+
+
+
+
+
+<title>Registration</title>
+<!----------------------------------------- V MENU by PRANSHU --------------------------------------->
+
+<link href="css/vmenu.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/formulaire-css3.css" media="screen" title="bbxcss" />
+
+<script src="final_files/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">/*<![CDATA[*/
+
+function makeScrollable(wrapper, scrollable){
+	// Get jQuery elements
+	var wrapper = $(wrapper), scrollable = $(scrollable);
+	
+	// Hide images until they are not loaded
+	scrollable.hide();
+	var loading = $('<div class="loading">Loading...</div>').appendTo(wrapper);
+	
+	// Set function that will check if all images are loaded
+	var interval = setInterval(function(){
+		var images = scrollable.find('img');
+		var completed = 0;
+		
+		// Counts number of images that are succesfully loaded
+		images.each(function(){
+			if (this.complete) completed++;	
+		});
+		
+		if (completed == images.length){
+			clearInterval(interval);
+			// Timeout added to fix problem with Chrome
+			setTimeout(function(){
+				
+				loading.hide();
+				// Remove scrollbars	
+				wrapper.css({overflow: 'hidden'});						
+				
+				scrollable.slideDown('slow', function(){
+					enable();	
+				});					
+			}, 1000);	
+		}
+	}, 100);
+	
+	function enable(){
+		// height of area at the top at bottom, that don't respond to mousemove
+		var inactiveMargin = 99;					
+		// Cache for performance
+		var wrapperWidth = wrapper.width();
+		var wrapperHeight = wrapper.height();
+		// Using outer height to include padding too
+		var scrollableHeight = scrollable.outerHeight() + 2*inactiveMargin;
+		// Do not cache wrapperOffset, because it can change when user resizes window
+		// We could use onresize event, but it's just not worth doing that 
+		// var wrapperOffset = wrapper.offset();
+		
+		// Create a invisible tooltip
+		var tooltip = $('<div class="sc_menu_tooltip"></div>')
+			.css('opacity', 0)
+			.appendTo(wrapper);
+	
+		// Save menu titles
+		scrollable.find('a').each(function(){				
+			$(this).data('tooltipText', this.title);				
+		});
+		
+		// Remove default tooltip
+		scrollable.find('a').removeAttr('title');		
+		// Remove default tooltip in IE
+		scrollable.find('img').removeAttr('alt');	
+		
+		var lastTarget;
+		//When user move mouse over menu			
+		wrapper.mousemove(function(e){
+			// Save target
+			lastTarget = e.target;
+
+			var wrapperOffset = wrapper.offset();
+		
+			var tooltipLeft = e.pageX - wrapperOffset.left;
+			// Do not let tooltip to move out of menu.
+			// Because overflow is set to hidden, we will not be able too see it 
+			tooltipLeft = Math.min(tooltipLeft, wrapperWidth - 75); //tooltip.outerWidth());
+			
+			var tooltipTop = e.pageY - wrapperOffset.top + wrapper.scrollTop() - 40;
+			// Move tooltip under the mouse when we are in the higher part of the menu
+			if (e.pageY - wrapperOffset.top < wrapperHeight/2){
+				tooltipTop += 80;
+			}				
+			tooltip.css({top: tooltipTop, left: tooltipLeft});				
+			
+			// Scroll menu
+			var top = (e.pageY -  wrapperOffset.top) * (scrollableHeight - wrapperHeight) / wrapperHeight - inactiveMargin;
+			if (top < 0){
+				top = 0;
+			}			
+			wrapper.scrollTop(top);
+		});
+		
+		// Setting interval helps solving perfomance problems in IE
+		var interval = setInterval(function(){
+			if (!lastTarget) return;	
+										
+			var currentText = tooltip.text();
+			
+			if (lastTarget.nodeName == 'IMG'){					
+				// We've attached data to a link, not image
+				var newText = $(lastTarget).parent().data('tooltipText');
+
+				// Show tooltip with the new text
+				if (currentText != newText) {
+					tooltip
+						.stop(true)
+						.css('opacity', 0)	
+						.text(newText)
+						.animate({opacity: 1}, 1000);
+				}					
+			}
+		}, 200);
+		
+		// Hide tooltip when leaving menu
+		wrapper.mouseleave(function(){
+			lastTarget = false;
+			tooltip.stop(true).css('opacity', 0).text('');
+		});			
+		
+		/*
+		//Usage of hover event resulted in performance problems
+		scrollable.find('a').hover(function(){
+			tooltip
+				.stop()
+				.css('opacity', 0)
+				.text($(this).data('tooltipText'))
+				.animate({opacity: 1}, 1000);
+	
+		}, function(){
+			tooltip
+				.stop()
+				.animate({opacity: 0}, 300);
+		});
+		*/			
+	}
+}
+	
+$(function(){	
+	makeScrollable("div.sc_menu_wrapper", "div.sc_menu");
+});
+/*]]>*/</script>
+<!----------------------------------------- V MENU ENDS GIVEN by PRANSHU --------------------------------------->
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Twaran, Twaran '11, Twaran 11, IIITM, ABV-IIITM, IIITM sports fest, IIIT sports fest, IIIT meet,Inter IIIT sports meet " />
+<meta name="description" content="Twaran '11 - An Inter IIIT Sports Meet, hosted by ABV-IIITM, Gwalior" />
+<LINK REL="SHORTCUT ICON" HREF="images/icon.png">
+
+<link href="css/football.css" rel="stylesheet" type="text/css" />
+<link href="css/fancybox.css" rel="stylesheet" type="text/css" />
+<!--[if gte IE 7]>
+	<link href="css/ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/easySlider1.7.js"></script>
+<script type="text/javascript" src="js/jquery.tweet.js"></script>
+<script type="text/javascript" src="js/jquery.anchor.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/TypoLatinserif-Bold.font.js"></script>
+<script type="text/javascript">
+<link rel="stylesheet" href="css/sexybuttons.css" type="text/css" />
+
+    	
+	Cufon.replace('#Navigation a', {hover: true});
+	Cufon.replace('#Navigation a', {color: '#666666', hover: {color: '#026924'}});
+	Cufon.replace('.Selected', {color: '#026924'});
+	Cufon.replace('h1, h2, h3, h4, h5, h6');
+		
+</script>
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $(".tweet").tweet({
+            username: "NETTuts",
+            join_text: "auto",
+            avatar_size: null,
+            count: 3,
+            auto_join_text_default: "we said,",
+            auto_join_text_ed: "we",
+            auto_join_text_ing: "we were",
+            auto_join_text_reply: "we replied to",
+            auto_join_text_url: "we were checking out",
+            loading_text: "loading tweets..."
+        });
+    });
+	
+</script> 
+<script type="text/javascript">
+	$(document).ready(function(){	
+		$("#home-slider").easySlider({
+			auto: true, 
+			continuous: true,
+			pause: 5000
+		});
+	});	
+</script> 
+<script type="text/javascript">var _siteRoot='index.html',_root='index.html';</script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/all-examples.css">
+	
+<noscript>
+		<style type="text/css">
+			#dock { top: 0; left: 100px; }
+			a.dock-item { position: relative; float: left; margin-right: 10px; }
+			.dock-item span { display: block; }
+			.stack { top: 0; }
+			.stack ul li { position: relative; }
+		</style>
+	</noscript>
+  
+	<script type="text/javascript" src="js/fisheye-iutil.min.js"></script>
+	<script type="text/javascript" src="js/dock-example1.js"></script>
+	<script type="text/javascript" src="js/jquery.jqDock.min.js"></script>
+	<script type="text/javascript" src="js/stack-1.js"></script>
+	<script type="text/javascript" src="js/stack-2.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var jqDockOpts = {align: 'left', duration: 200, labels: 'tc', size: 48, distance: 85};
+			$('#jqDock').jqDock(jqDockOpts);
+		});
+	</script>
+
+<!--[if IE 6]>
+<script type="text/javascript" src="js/jquery.reject.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(
+      function() {
+        jQuery.reject( {
+          imagePath:"images/browsers/"
+            })
+          })
+      </script>
+<![endif]-->
+
+
+	<!--<link rel="stylesheet" href="demo.css" type="text/css" media="all" />-->
+	
+	<!--<script type="text/javascript" src="requiered/jquery.js" ></script>-->
+	<script type="text/javascript" src="jqtransformplugin/jquery.jqtransform.js" ></script>
+	<script language="javascript">
+		$(function(){
+			$('form').jqTransform({imgPath:'jqtransformplugin/img/'});
+		});
+	</script>
+<style>
+input {
+    outline:none;
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border:1px solid rgba(0,0,0, 0.2);
+}
+
+input:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 1); 
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+    border:1px solid rgba(0,0,0, 0.8); 
+}</style>
+
+</head>
+
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a id="myAnchor" name="myAnchor"></a>
+
+<div id="wrapper"><!--start wrapper-->
+	
+	
+	<div id="header"><!--start header-->
+		<div id="header-inner">
+			
+			<div id="logo">
+				<h1><a href="index.html"><img src="images/logo.png" alt="Twaran 2012" /></a></h1>
+			</div>
+			<div class="clearer"></div>			
+		</div>
+	</div><!--end header-->
+	
+	<div id="dockContainer">
+	<div style="overflow: hidden;" class="sc_menu_wrapper">
+	<div style="display: block;" class="sc_menu">
+    <li><a class="dockItem" href="index.html"><img src="images/dock/home.png" alt="Home" title="Home" /></a></li>
+			<li><a class="dockItem" href="cricket.html"><img src="images/dock/outdoor.png" alt="Outdoor Events" title="Outdoor&nbsp;Events" /></a></li>
+			<li><a class="dockItem" href="badminton.html"><img src="images/dock/indoor.png" alt="Indoor&nbsp;Events" title="Indoor&nbsp;Events" /></a></li>
+			<li><a class="dockItem" href="zerolimit.html"><img src="images/dock/zero.jpg" alt="Zero&nbsp;Limit" title="Zero&nbsp;Limit" /></a></li>
+			<li><a class="dockItem" href="registration.html"><img src="images/dock/register.png" alt="Register&nbsp;Here" title="Register&nbsp;Here" /></a></li>
+			<li><a class="dockItem" href="downloads.html"><img src="images/dock/downloads.png" alt="Downloads" title="Downloads" /></a></li>
+			<li><a class="dockItem" href="hospitality.html"><img src="images/dock/hospitality.png" alt="Hospitality&nbsp;Desk"  title="Hospitality&nbsp;Desk"/></a></li>
+			<li><a class="dockItem" href="contact.html"><img src="images/dock/contact.png" alt="Contact Us" title="Contact&nbsp;Us" /></a></li>
+	   
+			
+	</div>
+        </div>
+	</div>
+	
+	<div id="content"><!--middle container-->
+		<div class="content-container">
+			<div class="content-top"></div><!--container top-->
+			
+			<div class="content-inner"><!--start container inner-->
+			
+			  <div class="main-content-full">
+					<h2>Twaran 2013 Registration</h2>
+					<div>
+					  <!--  -->
+                      <div align="left"></div>
+				  </div>
+					<div>
+                      <div>
+                        <div data-id="pj1" data-type="category3">
+                          <div>
+                            <h6 id="pj1"><a href="">Register Here</a></h6>
+                            <p><form action='contact1.php' name="Registration Form" method="POST"> 
+<table width="100%" style=" margin-left:20px; padding-left:20px;">
+  <tr height="20px"></tr>
+  <tr><td><label>1.) Institute Name(*)</label></td><td><div class="rowElem"><input type="text" name="institute_name" /></div></td></tr>
+  <tr height="8px"></tr>
+  <tr><td><label>2.) Sports Incharge(*)</label></td><td><input type="text" name="sports_incharge_name" /></td></tr>
+  <tr height="8px"></tr>
+  <tr><td><label>3.) Contact Number(*)</label></td><td><input type="text" name="contact_faculty_number" /></td></tr>
+  <tr height="8px"></tr>
+  <tr><td><label>4.) Student Incharge(*)</label></td><td><input type="text" name="students_incharge_name" /></td></tr>
+  <tr height="8px"></tr>
+  <tr><td><label>4.) e-Mail ID(*)</label></td><td><input type="text" name="email_name" /></td></tr>
+  <tr height="8px"></tr>
+  <tr><td><label>5.) Contact Number(*)</label></td><td><input type="text" name="contact_student_number" /></td></tr>
+  <tr height="8px"></tr>
+  <tr><td><label>6.) No. of Team Members(*)</label></td><td><input type="text" name="team_members_number" /></td></tr>
+  </table>
+  <br />
+ <label>&nbsp;&nbsp;7.) Please check events mentioned below in which your team would like to participate :-</label>
+  <br />
+  <table width="100%" style=" margin-left:20px;" >
+ <tr>
+   <td> <b>(i) OutDoor Games:</b></td>
+   <td><b>(ii) Races:</b></td><td><b>(iii) Indoor Games:</b></td></tr>
+ <tr><td>
+ <table>
+  <tr><td><label>Cricket</label></td><td><input type="checkbox" name="cricket_event" /></td></tr>
+  <tr><td><label>Football</label></td><td><input type="checkbox" name="football_event" /></td></tr>
+  <tr><td><label>Basketball</label></td><td><input type="checkbox" name="basketball_event" /></td></tr>
+  <tr><td><label>Volleyball</label></td><td><input type="checkbox" name="voleyball_event" /></td></tr>
+  <tr><td><label>Lawn Tennis</label></td><td><input type="checkbox" name="lawn_tennis_event" /></td></tr>
+  </table></td><td><table>
+  <tr><td><label>100 mts</label></td><td><input type="checkbox" name="abc" /></td></tr>
+  <tr><td><label>200 mts</label></td><td><input type="checkbox" name="abc2" /></td></tr>
+  <tr><td><label>Relay Races</label></td><td><input type="checkbox" name="relayrace_event" /></td></tr>
+  <tr><td><label>Marathon</label></td><td><input type="checkbox" name="marathon_event" /></td></tr>
+  <tr><td><label>Long Jump</label></td><td><input type="checkbox" name="long_jump_event" /></td></tr>
+  <tr><td><label>Hammer Throw</label></td><td><input type="checkbox" name="hammer_throw_event" /></td></tr>
+  <tr><td><label>Javelin Throw</label></td><td><input type="checkbox" name="javelin_throw_event" /></td></tr>
+  <tr><td><label>Shotput</label></td><td><input type="checkbox" name="shotput_event" /></td></tr>
+  <tr><td><label>Discuss Throw</label></td><td><input type="checkbox" name="discus_throw_event" /></td></tr>
+  </table></td><td><table>
+  <tr><td><label>Tabel Tennis</label></td><td><input type="checkbox" name="tabel_tennis_event" /></td></tr>
+  <tr><td><label>Carrom</label></td><td><input type="checkbox" name="carrom_event" /></td></tr>
+  <tr><td><label>Chess</label></td><td><input type="checkbox" name="chess_event" /></td></tr>
+  <tr><td><label>Snooker</label></td><td><input type="checkbox" name="snooker_event" /></td></tr>
+  <tr><td><label>Badminton</label></td><td><input type="checkbox" name="badminton_event" /></td></tr>
+  <tr><td><label>PC Games</label></td><td><input type="checkbox" name="pc_games_event" /></td></tr>
+  </table></td></tr>
+  
+  <tr>
+    <td colspan="3"><br /><BR /><div align="center" class="style1"><font color="#FF0000">All (*) fields are compulsory. </font></div></td>
+    </tr>
+  <tr><td>&nbsp;</td><td><br /><br /><center><input type="submit" value="Register" class="submit" id="submit"  /> &nbsp;&nbsp; &nbsp;<br /><br /><br />
+</center></td><td>&nbsp;</td></tr>
+  </table>
+  </form></p>
+                            <div>
+                              <!--  -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+				  </div>
+					
+					
+					
+					
+					
+																					
+					                          
+				  
+				</div>
+								
+				<div class="clear"></div>				
+
+			</div><!--end container inner-->
+			
+			<div class="content-bottom"></div><!--container bottom-->
+		</div>
+	</div><!--end middle container-->
+	
+	
+	
+	<div id="footer"><!--start footer-->
+		<div class="footer-inner" style="text-align:justify">
+			<div class="footer-module" style="text-align:justify">
+				<h4>Quick Links </h4>
+				<ul id="recent-blog">
+					<li><a href="http://zerolimit.in" target="_blank"><strong>Zero Limit </strong>(the counter strike tournament) </a></li>
+					<li><a href="http://iiitm.ac.in" target="_blank">About <strong>ABV-IIITM</strong></a></li>
+					<li><a href="registration.html"><strong>Register Here</strong></a></li>
+					
+				</ul>
+			</div>
+			
+			<div class="footer-module middle" style="text-align:left">
+				<h4>Mailing Info:</h4>
+				
+					<ul id="recent-blog">
+					<li><a href="#"><strong></strong>ABV-Indian Institute of Information Technology and Management, Gwalior. </a></li>
+					<li><a href="#">Morena Link Road
+
+Gwalior, Madhya Pradesh
+
+INDIA - 474010.</a></li>
+				</ul>
+					
+				
+				
+				<div class="clear"></div>
+				
+				
+			</div>
+			
+			<div class="footer-module" style="text-align:left">
+				<h4>Any Query? Mail Us</h4>
+				<ul id="recent-blog" >
+					<li><a href="mailto:twaran2013@gmail.com">Email:-<strong> twaran@iiitm.ac.in; twaran2013@gmail.com
+
+					
+				</ul>
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</div><!--end footer-->
+	
+	
+	<div id="base-footer"><!--start base footer-->
+		<div id="base-footer-inner">
+			<div id="base-footer-left"><p><a href="#">Twaran</a>. &copy; 2013. All rights reserved. | <a href="#">Designed by</a> | <span>creative team Twaran 2013</span></p></div>
+			<div id="base-footer-right">
+				<ul class="base-footer-icons">
+					<li><a href="#"><img src="images/icon-facebook.png" width="24" height="24" alt="Facebook" title="Check us on Facebook" /></a></li>
+					<li><a href="#"><img src="images/icon-twitter.png" width="24" height="24" alt="Twitter" title="Follow us on Twitter" /></a></li>
+					<li><a href="#"><img src="images/icon-linkedin.png" width="24" height="24" alt="Linkedin" title="View our Linkedin Profile" /></a></li>
+					<li><a href="#"><img src="images/blog.png" width="24" height="24" alt="Blogspot" title="See our Blog" /></a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div><!--end base footer-->
+	
+	
+</div><!--end wrapper-->
+
+<a class="anchorLink" id="backtotop" href="#myAnchor">Back to the top</a>
+
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+
+
+</html>

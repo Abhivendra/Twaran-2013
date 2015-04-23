@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+
+<head>
+<title>Twaran 2012 | Basketball |</title>
+<!----------------------------------------- V MENU by PRANSHU --------------------------------------->
+
+<link href="css/vmenu.css" rel="stylesheet" type="text/css" media="all" />
+<script src="final_files/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">/*<![CDATA[*/
+
+function makeScrollable(wrapper, scrollable){
+	// Get jQuery elements
+	var wrapper = $(wrapper), scrollable = $(scrollable);
+	
+	// Hide images until they are not loaded
+	scrollable.hide();
+	var loading = $('<div class="loading">Loading...</div>').appendTo(wrapper);
+	
+	// Set function that will check if all images are loaded
+	var interval = setInterval(function(){
+		var images = scrollable.find('img');
+		var completed = 0;
+		
+		// Counts number of images that are succesfully loaded
+		images.each(function(){
+			if (this.complete) completed++;	
+		});
+		
+		if (completed == images.length){
+			clearInterval(interval);
+			// Timeout added to fix problem with Chrome
+			setTimeout(function(){
+				
+				loading.hide();
+				// Remove scrollbars	
+				wrapper.css({overflow: 'hidden'});						
+				
+				scrollable.slideDown('slow', function(){
+					enable();	
+				});					
+			}, 1000);	
+		}
+	}, 100);
+	
+	function enable(){
+		// height of area at the top at bottom, that don't respond to mousemove
+		var inactiveMargin = 99;					
+		// Cache for performance
+		var wrapperWidth = wrapper.width();
+		var wrapperHeight = wrapper.height();
+		// Using outer height to include padding too
+		var scrollableHeight = scrollable.outerHeight() + 2*inactiveMargin;
+		// Do not cache wrapperOffset, because it can change when user resizes window
+		// We could use onresize event, but it's just not worth doing that 
+		// var wrapperOffset = wrapper.offset();
+		
+		// Create a invisible tooltip
+		var tooltip = $('<div class="sc_menu_tooltip"></div>')
+			.css('opacity', 0)
+			.appendTo(wrapper);
+	
+		// Save menu titles
+		scrollable.find('a').each(function(){				
+			$(this).data('tooltipText', this.title);				
+		});
+		
+		// Remove default tooltip
+		scrollable.find('a').removeAttr('title');		
+		// Remove default tooltip in IE
+		scrollable.find('img').removeAttr('alt');	
+		
+		var lastTarget;
+		//When user move mouse over menu			
+		wrapper.mousemove(function(e){
+			// Save target
+			lastTarget = e.target;
+
+			var wrapperOffset = wrapper.offset();
+		
+			var tooltipLeft = e.pageX - wrapperOffset.left;
+			// Do not let tooltip to move out of menu.
+			// Because overflow is set to hidden, we will not be able too see it 
+			tooltipLeft = Math.min(tooltipLeft, wrapperWidth - 75); //tooltip.outerWidth());
+			
+			var tooltipTop = e.pageY - wrapperOffset.top + wrapper.scrollTop() - 40;
+			// Move tooltip under the mouse when we are in the higher part of the menu
+			if (e.pageY - wrapperOffset.top < wrapperHeight/2){
+				tooltipTop += 80;
+			}				
+			tooltip.css({top: tooltipTop, left: tooltipLeft});				
+			
+			// Scroll menu
+			var top = (e.pageY -  wrapperOffset.top) * (scrollableHeight - wrapperHeight) / wrapperHeight - inactiveMargin;
+			if (top < 0){
+				top = 0;
+			}			
+			wrapper.scrollTop(top);
+		});
+		
+		// Setting interval helps solving perfomance problems in IE
+		var interval = setInterval(function(){
+			if (!lastTarget) return;	
+										
+			var currentText = tooltip.text();
+			
+			if (lastTarget.nodeName == 'IMG'){					
+				// We've attached data to a link, not image
+				var newText = $(lastTarget).parent().data('tooltipText');
+
+				// Show tooltip with the new text
+				if (currentText != newText) {
+					tooltip
+						.stop(true)
+						.css('opacity', 0)	
+						.text(newText)
+						.animate({opacity: 1}, 1000);
+				}					
+			}
+		}, 200);
+		
+		// Hide tooltip when leaving menu
+		wrapper.mouseleave(function(){
+			lastTarget = false;
+			tooltip.stop(true).css('opacity', 0).text('');
+		});			
+		
+		/*
+		//Usage of hover event resulted in performance problems
+		scrollable.find('a').hover(function(){
+			tooltip
+				.stop()
+				.css('opacity', 0)
+				.text($(this).data('tooltipText'))
+				.animate({opacity: 1}, 1000);
+	
+		}, function(){
+			tooltip
+				.stop()
+				.animate({opacity: 0}, 300);
+		});
+		*/			
+	}
+}
+	
+$(function(){	
+	makeScrollable("div.sc_menu_wrapper", "div.sc_menu");
+});
+/*]]>*/</script>
+<!----------------------------------------- V MENU ENDS GIVEN by PRANSHU --------------------------------------->
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Twaran, Twaran '11, Twaran 11, IIITM, ABV-IIITM, IIITM sports fest, IIIT sports fest, IIIT meet,Inter IIIT sports meet " />
+<meta name="description" content="Twaran '11 - An Inter IIIT Sports Meet, hosted by ABV-IIITM, Gwalior" />
+<LINK REL="SHORTCUT ICON" HREF="images/icon.png">
+
+<link href="css/basketball.css" rel="stylesheet" type="text/css" />
+<link href="css/fancybox.css" rel="stylesheet" type="text/css" />
+<!--[if gte IE 7]>
+	<link href="css/ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/easySlider1.7.js"></script>
+<script type="text/javascript" src="js/jquery.tweet.js"></script>
+<script type="text/javascript" src="js/jquery.anchor.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/TypoLatinserif-Bold.font.js"></script>
+<script type="text/javascript">
+    	
+	Cufon.replace('#Navigation a', {hover: true});
+	Cufon.replace('#Navigation a', {color: '#666666', hover: {color: '#026924'}});
+	Cufon.replace('.Selected', {color: '#026924'});
+	Cufon.replace('h1, h2, h3, h4, h5, h6');
+		
+</script>
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $(".tweet").tweet({
+            username: "NETTuts",
+            join_text: "auto",
+            avatar_size: null,
+            count: 3,
+            auto_join_text_default: "we said,",
+            auto_join_text_ed: "we",
+            auto_join_text_ing: "we were",
+            auto_join_text_reply: "we replied to",
+            auto_join_text_url: "we were checking out",
+            loading_text: "loading tweets..."
+        });
+    });
+	
+</script> 
+<script type="text/javascript">
+	$(document).ready(function(){	
+		$("#home-slider").easySlider({
+			auto: true, 
+			continuous: true,
+			pause: 5000
+		});
+	});	
+</script> 
+<script type="text/javascript">var _siteRoot='index.html',_root='index.html';</script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/all-examples.css">
+	
+<noscript>
+		<style type="text/css">
+			#dock { top: 0; left: 100px; }
+			a.dock-item { position: relative; float: left; margin-right: 10px; }
+			.dock-item span { display: block; }
+			.stack { top: 0; }
+			.stack ul li { position: relative; }
+		</style>
+	</noscript>
+  
+	<script type="text/javascript" src="js/fisheye-iutil.min.js"></script>
+	<script type="text/javascript" src="js/dock-example1.js"></script>
+	<script type="text/javascript" src="js/jquery.jqDock.min.js"></script>
+	<script type="text/javascript" src="js/stack-1.js"></script>
+	<script type="text/javascript" src="js/stack-2.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var jqDockOpts = {align: 'left', duration: 200, labels: 'tc', size: 48, distance: 85};
+			$('#jqDock').jqDock(jqDockOpts);
+		});
+	</script>
+
+<!--[if IE 6]>
+<script type="text/javascript" src="js/jquery.reject.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(
+      function() {
+        jQuery.reject( {
+          imagePath:"images/browsers/"
+            })
+          })
+      </script>
+<![endif]-->
+
+</head>
+
+<body>
+
+<a id="myAnchor" name="myAnchor"></a>
+
+<div id="wrapper"><!--start wrapper-->
+	
+	
+	<div id="header"><!--start header-->
+		<div id="header-inner">
+			
+			<div id="logo">
+				<h1><a href="index.html"><img src="images/logo.png" alt="Twaran 2012" /></a></h1>
+			</div>
+			<div class="clearer"></div>			
+		</div>
+	</div><!--end header-->
+	
+<div id="dockContainer">
+		<div style="overflow: hidden;" class="sc_menu_wrapper">
+	<div style="display: block;" class="sc_menu">
+			<li><a class="dockItem" href="index.html"><img src="images/dock/home.png" alt="Home" title="Home" /></a></li>
+		<li><a class="dockItem" href="cricket.html"><img src="images/dock/Cricket.jpg" alt="Cricket" title="Cricket" /></a></li>
+			<li><a class="dockItem" href="volleyball.html"><img src="images/dock/volleyball.jpg" alt="Volleyball" title="Volleyball" /></a></li>
+			<li><a class="dockItem" href="basketball.html"><img src="images/dock/basketball.jpg" alt="Basketball"  title="Basketball"/></a></li>
+			<li><a class="dockItem" href="football.html"><img src="images/dock/football.jpg" alt="Football" title="Football" /></a></li>
+			
+			<li><a class="dockItem" href="lawntennis.html"><img src="images/dock/lawn tennis.jpg" alt="Lawn&nbsp;Tennis" title="Lawn&nbsp;Tennis" /></a></li>
+			<li><a class="dockItem" href="athletics.html"><img src="images/dock/athletics.png" alt="Athletics" title="Athletics" /></a></li>
+		</div>
+        </div>
+	</div>	
+	
+	
+	
+	<div id="content"><!--middle container-->
+		<div class="content-container">
+			<div class="content-top"></div><!--container top-->
+			
+			<div class="content-inner"><!--start container inner-->
+			
+			  <div class="main-content-full">
+					<h2>Basketball</h2>
+					<div>
+					  <!--  -->
+                      <div align="left"></div>
+				  </div>
+					<div>
+                      <div>
+                        <div data-id="pj1" data-type="category3">
+                          <div>
+                            <h6 id="pj1"><a href="">Introduction</a></h6>
+                            <p align="justify">This is known as one of the best world-class sport, playing almost at every country whether at International or National level and having lots and lots of fans all over the world. Basketball as the name says it’s a combination of two words basket and ball, where we have to throw the ball under several rules and regulations to the opponent’s basket. One of the most demanding games of the modern era, the game boasts of stunning moves and intelligent passes. TWARAN also comprises of this highly exciting and electrifying game with equally energetic spectators who make the game more thrilling with their hooting and shouts. </p>
+                            <div>
+                              <!--  -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+				  </div>
+					
+					
+					<div class="sidebar-cats"><!--start categories-->
+						<h4>Rules</h4>
+						<ul>
+							<li><a href="#">All normal FIBA rules apply- concerning-</a></li>
+							<li><a href="#">10 minutes each quarter with 2 minute break between the quarters and 5 mins at half time.</a></li>
+							<li><a href="#">Use of abusive or foul language during the play can lead to technical fouls or expulsion depending on the referee and the organizing committee.</a></li>
+							<li><a href="#">No players should have anything on his/her hand or neck (wrist watch, necklace, ring, kada, bracelet etc.) jewellery of any kind is not allowed and nails have to be cut.</a></li><li><a href="#">Max Number of players in men's team : 12 & in women's team : 12</a></li>
+							<li><a href="#">The organizers retain the right to suspend any team from participating.</a></li>
+							
+							<li><a href="#">These are merely guidelines and the organizing body reserves the right to make changes without prior information.</a></li>
+							
+						</ul>
+					</div>
+					
+					<h3>Event Head:</h3>
+					<table width="70%" border="0" style="margin-left:20px;"><ul class="styled">
+							  <tr>
+								<td><li>Arpit Dixit</li></td>
+								
+							  </tr>
+					</table>	  
+					
+					<h3>Event Organisers:</h3>
+					<table width="70%" border="0" style="margin-left:20px;"><ul class="styled">
+							  <tr>
+								<td><li>Keshav Laad</li></td>
+								<td>Email: mg.mohitgawande@gmail.com
+</td>
+								<td>Mob: +91-7415277518</td>
+							  </tr>
+							  <tr>
+								<td><li>Jatin Kumar</li></td>
+								<td>Email: abhishekdandona@yahoo.co.in</td>
+								<td>Mob: +91-7879738082</td>
+							  </tr>
+							  <tr>
+								<td><li>Milan Pal Singh<li></td>
+								<td>Email: abhishekdandona@yahoo.co.in</td>
+								<td>Mob: +91-7879738082</td>
+							  </tr>
+							 
+							  </ul>
+				  </table>
+												
+				  <h3>Register Your Team: </h3>
+									
+					                            <p>Register Here : <a href="registration.html">Click Here </a></p>
+				  
+				</div>
+								
+				<div class="clear"></div>				
+
+			</div><!--end container inner-->
+			
+			<div class="content-bottom"></div><!--container bottom-->
+		</div>
+	</div><!--end middle container-->
+	
+	
+	
+	<div id="footer"><!--start footer-->
+		<div class="footer-inner" style="text-align:justify">
+			<div class="footer-module" style="text-align:justify">
+				<h4>Quick Links </h4>
+				<ul id="recent-blog">
+					<li><a href="http://zerolimit.in" target="_blank"><strong>Zero Limit </strong>(the counter strike tournament) </a></li>
+					<li><a href="http://iiitm.ac.in" target="_blank">About <strong>ABV-IIITM</strong></a></li>
+					<li><a href="registration.html"><strong>Register Here</strong></a></li>
+					
+				</ul>
+			</div>
+			
+			<div class="footer-module middle" style="text-align:left">
+				<h4>Mailing Info:</h4>
+				
+					<ul id="recent-blog">
+					<li><a href="#"><strong></strong>ABV-Indian Institute of Information Technology and Management, Gwalior. </a></li>
+					<li><a href="#">Morena Link Road
+
+Gwalior, Madhya Pradesh
+
+INDIA - 474010.</a></li>
+				</ul>
+					
+				
+				
+				<div class="clear"></div>
+				
+				
+			</div>
+			
+			<div class="footer-module" style="text-align:left">
+				<h4>Any Query? Mail Us</h4>
+				<ul id="recent-blog" >
+					<li><a href="mailto:twaran2013@gmail.com">Email:-<strong> twaran@iiitm.ac.in; twaran2013@gmail.com
+
+					
+				</ul>
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</div><!--end footer-->
+	
+	
+	<div id="base-footer"><!--start base footer-->
+		<div id="base-footer-inner">
+			<div id="base-footer-left"><p><a href="#">Twaran</a>&copy; 2013. All rights reserved. | <a href="#">Designed by</a> | <span>Webdevelopment team Twaran 2013</span></p></div>
+			<div id="base-footer-right">
+				<ul class="base-footer-icons">
+					<li><a href="#"><img src="images/icon-facebook.png" width="24" height="24" alt="Facebook" title="Check us on Facebook" /></a></li>
+					<li><a href="#"><img src="images/icon-twitter.png" width="24" height="24" alt="Twitter" title="Follow us on Twitter" /></a></li>
+					<li><a href="#"><img src="images/icon-linkedin.png" width="24" height="24" alt="Linkedin" title="View our Linkedin Profile" /></a></li>
+					<li><a href="#"><img src="images/icon-flickr.png" width="24" height="24" alt="Flickr" title="See our Flickr Stream" /></a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div><!--end base footer-->
+	
+	
+</div><!--end wrapper-->
+
+<a class="anchorLink" id="backtotop" href="#myAnchor">Back to the top</a>
+
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+
+
+</html>

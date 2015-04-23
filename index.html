@@ -1,0 +1,757 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+
+<head>
+<title>Twaran 2013</title>
+
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Twaran, Twaran '13, Twaran 13, IIITM, ABV-IIITM, IIITM sports fest, IIIT sports fest, IIIT meet,Inter IIIT sports meet " />
+<meta name="description" content="Twaran '13 - An Inter IIIT Sports Meet, hosted by ABV-IIITM, Gwalior" />
+<LINK REL="SHORTCUT ICON" HREF="images/icon.png">
+<!--
+THIS  CODE IS INCLUDED GRADUALFADER.JS
+
+ ZOOM IMAGE ENDS 
+ ------------------------------------------------------------->
+ <!-- CODE IS IN JS/SCRIPTS.JS ------------>
+
+<!----------------------------------------- V MENU by PRANSHU --------------------------------------->
+<script type="text/javascript" src="js/jquery-latest.js"></script> 
+<script type="text/javascript"> 
+$(document).ready(function(){
+
+//Page Flip on hover
+
+	$("#pageflip").hover(function() {
+		$("#pageflip img , .msg_block").stop()
+			.animate({
+				width: '307px', 
+				height: '319px'
+			}, 500); 
+		} , function() {
+		$("#pageflip img").stop() 
+			.animate({
+				width: '70px', 
+				height: '75px'
+			}, 220);
+		$(".msg_block").stop() 
+			.animate({
+				width: '70px', 
+				height: '75px'
+			}, 200);
+	});
+
+	
+});
+</script> 
+<style type="text/css">
+img { behavior: url(iepngfix.htc) }
+#pageflip {
+	position: relative;
+	right: 0; top: 0;
+	float: right; 
+}
+#pageflip img {
+	width: 50px; height: 52px;
+	z-index: 99;
+	position: absolute;
+	right: 0; top: 0;
+	-ms-interpolation-mode: bicubic;
+}
+#pageflip .msg_block {
+	width: 50px; height: 50px;
+	overflow: hidden;
+	position: absolute;
+	right: 0; top: 0;
+	background: url(subscribe.png) no-repeat right top;
+}
+</style>
+<link href="css/vmenu.css" rel="stylesheet" type="text/css" media="all" />
+<script src="final_files/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">/*<![CDATA[*/
+
+function makeScrollable(wrapper, scrollable){
+	// Get jQuery elements
+	var wrapper = $(wrapper), scrollable = $(scrollable);
+	
+	// Hide images until they are not loaded
+	scrollable.hide();
+	var loading = $('<div class="loading">Loading...</div>').appendTo(wrapper);
+	
+	// Set function that will check if all images are loaded
+	var interval = setInterval(function(){
+		var images = scrollable.find('img');
+		var completed = 0;
+		
+		// Counts number of images that are succesfully loaded
+		images.each(function(){
+			if (this.complete) completed++;	
+		});
+		
+		if (completed == images.length){
+			clearInterval(interval);
+			// Timeout added to fix problem with Chrome
+			setTimeout(function(){
+				
+				loading.hide();
+				// Remove scrollbars	
+				wrapper.css({overflow: 'hidden'});						
+				
+				scrollable.slideDown('slow', function(){
+					enable();	
+				});					
+			}, 1000);	
+		}
+	}, 100);
+	
+	function enable(){
+		// height of area at the top at bottom, that don't respond to mousemove
+		var inactiveMargin = 99;					
+		// Cache for performance
+		var wrapperWidth = wrapper.width();
+		var wrapperHeight = wrapper.height();
+		// Using outer height to include padding too
+		var scrollableHeight = scrollable.outerHeight() + 2*inactiveMargin;
+		// Do not cache wrapperOffset, because it can change when user resizes window
+		// We could use onresize event, but it's just not worth doing that 
+		// var wrapperOffset = wrapper.offset();
+		
+		// Create a invisible tooltip
+		var tooltip = $('<div class="sc_menu_tooltip"></div>')
+			.css('opacity', 0)
+			.appendTo(wrapper);
+	
+		// Save menu titles
+		scrollable.find('a').each(function(){				
+			$(this).data('tooltipText', this.title);				
+		});
+		
+		// Remove default tooltip
+		scrollable.find('a').removeAttr('title');		
+		// Remove default tooltip in IE
+		scrollable.find('img').removeAttr('alt');	
+		
+		var lastTarget;
+		//When user move mouse over menu			
+		wrapper.mousemove(function(e){
+			// Save target
+			lastTarget = e.target;
+
+			var wrapperOffset = wrapper.offset();
+		
+			var tooltipLeft = e.pageX - wrapperOffset.left;
+			// Do not let tooltip to move out of menu.
+			// Because overflow is set to hidden, we will not be able too see it 
+			tooltipLeft = Math.min(tooltipLeft, wrapperWidth - 75); //tooltip.outerWidth());
+			
+			var tooltipTop = e.pageY - wrapperOffset.top + wrapper.scrollTop() - 40;
+			// Move tooltip under the mouse when we are in the higher part of the menu
+			if (e.pageY - wrapperOffset.top < wrapperHeight/2){
+				tooltipTop += 80;
+			}				
+			tooltip.css({top: tooltipTop, left: tooltipLeft});				
+			
+			// Scroll menu
+			var top = (e.pageY -  wrapperOffset.top) * (scrollableHeight - wrapperHeight) / wrapperHeight - inactiveMargin;
+			if (top < 0){
+				top = 0;
+			}			
+			wrapper.scrollTop(top);
+		});
+		
+		// Setting interval helps solving perfomance problems in IE
+		var interval = setInterval(function(){
+			if (!lastTarget) return;	
+										
+			var currentText = tooltip.text();
+			
+			if (lastTarget.nodeName == 'IMG'){					
+				// We've attached data to a link, not image
+				var newText = $(lastTarget).parent().data('tooltipText');
+
+				// Show tooltip with the new text
+				if (currentText != newText) {
+					tooltip
+						.stop(true)
+						.css('opacity', 0)	
+						.text(newText)
+						.animate({opacity: 1}, 1000);
+				}					
+			}
+		}, 200);
+		
+		// Hide tooltip when leaving menu
+		wrapper.mouseleave(function(){
+			lastTarget = false;
+			tooltip.stop(true).css('opacity', 0).text('');
+		});			
+		
+		/*
+		//Usage of hover event resulted in performance problems
+		scrollable.find('a').hover(function(){
+			tooltip
+				.stop()
+				.css('opacity', 0)
+				.text($(this).data('tooltipText'))
+				.animate({opacity: 1}, 1000);
+	
+		}, function(){
+			tooltip
+				.stop()
+				.animate({opacity: 0}, 300);
+		});
+		*/			
+	}
+}
+	
+$(function(){	
+	makeScrollable("div.sc_menu_wrapper", "div.sc_menu");
+});
+/*]]>*/</script>
+<!----------------------------------------- V MENU ENDS GIVEN by PRANSHU --------------------------------------->
+
+
+<!-- background slideshow -->
+<link rel="stylesheet" href="css/supersized.css" type="text/css" media="screen" />
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+		<script type="text/javascript" src="js/supersized.3.1.3.min.js"></script>
+		
+		<script type="text/javascript">  
+			
+			jQuery(function($){
+				$.supersized({
+				
+					//Functionality
+					slideshow               :   1,		//Slideshow on/off
+					autoplay				:	1,		//Slideshow starts playing automatically
+					start_slide             :   1,		//Start slide (0 is random)
+					random					: 	1,		//Randomize slide order (Ignores start slide)
+					slide_interval          :   2000,	//Length between transitions
+					transition              :   2, 		//0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+					transition_speed		:	500,	//Speed of transition
+					new_window				:	1,		//Image links open in new window/tab
+					pause_hover             :   0,		//Pause slideshow on hover
+					keyboard_nav            :   1,		//Keyboard navigation on/off
+					performance				:	1,		//0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
+					image_protect			:	1,		//Disables image dragging and right click with Javascript
+					image_path				:	'images/', //Default image path
+
+					//Size & Position
+					min_width		        :   0,		//Min width allowed (in pixels)
+					min_height		        :   0,		//Min height allowed (in pixels)
+					vertical_center         :   1,		//Vertically center background
+					horizontal_center       :   1,		//Horizontally center background
+					fit_portrait         	:   1,		//Portrait images will not exceed browser height
+					fit_landscape			:   0,		//Landscape images will not exceed browser width
+					
+					//Components
+					navigation              :   1,		//Slideshow controls on/off
+					thumbnail_navigation    :   1,		//Thumbnail navigation
+					slide_counter           :   1,		//Display slide numbers
+					slide_captions          :   1,		//Slide caption (Pull from "title" in slides array)
+					slides 					:  	[		//Slideshow Images
+				
+														{image : 'images/master-bg.jpg', title : ''},  
+														{image : 'images/master-bg-athletics.jpg', title : ''},
+														{image : 'images/master-bg-basketball.jpg', title : ''},
+														{image : 'images/master-bg-carom.jpg', title : ''},
+														{image : 'images/master-bg-chess.jpg', title : ''},
+														/*{image : 'images/master-bg-cricket.jpg', title : ''},
+														{image : 'images/master-bg-football.jpg', title : ''}, 
+														{image : 'images/master-bg-lawntennis.jpg', title : ''},
+														{image : 'images/master-bg-snooker.jpg', title : ''},
+														{image : 'images/master-bg-tabletennis.jpg', title : ''},
+														{image : 'images/master-bg-volleyball.jpg', title : ''}, 
+														{image : 'images/master-bg-badminton.jpg', title : ''}
+														 */
+												]
+												
+				}); 
+		    });
+		    
+		</script>
+	
+	<!-- bakground slide show ends --->
+
+<!-- POPUP -->
+   <link href="theme/style.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.betterTooltip.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$('.tTip').betterTooltip({speed: 150, delay: 300});
+		});
+	</script>
+    
+ <!--
+ <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+   
+    
+    
+<!-- POPUP END-->
+<style>
+html{ height:100%; }
+body{ height:100%;}
+
+#flashContainer { width:75%; height:75%; position:relative; z-index:100; margin:0 auto 0; padding:0; border:3px solid #b3b3a9; }
+
+
+</style>
+
+
+
+
+
+<script type="text/javascript" src="gradualfader.js">
+
+/***********************************************
+* Gradual Element Fader- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Visit # for hundreds of DHTML scripts
+* This notice must stay intact for legal use
+***********************************************/
+
+</script>
+
+
+<link href="css/screen.css" rel="stylesheet" type="text/css" />
+<!--[if gte IE 7]>
+	<link href="css/ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+
+
+
+
+
+<script type="text/javascript" src="_inc/swfobject.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="js/easySlider1.7.js"></script>
+<script type="text/javascript" src="js/jquery.tweet.js"></script>
+<script type="text/javascript" src="js/jquery.anchor.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/TypoLatinserif-Bold.font.js"></script>
+<script type="text/javascript">
+    	
+	Cufon.replace('#Navigation a', {hover: true});
+	Cufon.replace('#Navigation a', {color: '#666666', hover: {color: '#026924'}});
+	Cufon.replace('.Selected', {color: '#026924'});
+	Cufon.replace('h1, h2, h3, h4, h5, h6');
+		
+</script>
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $(".tweet").tweet({
+            username: "NETTuts",
+            join_text: "auto",
+            avatar_size: null,
+            count: 3,
+            auto_join_text_default: "we said,",
+            auto_join_text_ed: "we",
+            auto_join_text_ing: "we were",
+            auto_join_text_reply: "we replied to",
+            auto_join_text_url: "we were checking out",
+            loading_text: "loading tweets..."
+        });
+    });
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){	
+		$("#home-slider").easySlider({
+			auto: true, 
+			continuous: true,
+			pause: 5000
+		});
+	});	
+</script> 
+
+<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+  <script type="text/javascript">var _siteRoot='index.html',_root='index.html';</script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+
+<!--[if IE 6]>
+<script type="text/javascript" src="js/jquery.reject.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(
+      function() {
+        jQuery.reject( {
+          imagePath:"images/browsers/"
+            })
+          })
+      </script>
+<![endif]-->
+
+
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/all-examples.css">
+<noscript>
+		<style type="text/css">
+			#dock { top: 0; left: 100px; }
+			a.dock-item { position: relative; float: left; margin-right: 10px; }
+			.dock-item span { display: block; }
+			.stack { top: 0; }
+			.stack ul li { position: relative; }
+		</style>
+	</noscript>
+	<script type="text/javascript" src="js/fisheye-iutil.min.js"></script>
+	<script type="text/javascript" src="js/dock-example1.js"></script>
+	<script type="text/javascript" src="js/jquery.jqDock.min.js"></script>
+	<script type="text/javascript" src="js/stack-1.js"></script>
+	<script type="text/javascript" src="js/stack-2.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var jqDockOpts = {align: 'left', duration: 200, labels: 'tc', size: 48, distance: 85};
+			$('#jqDock').jqDock(jqDockOpts);
+		});
+	</script>
+    <style type="text/css">
+	#scroller{
+		font-family:"bradley Hand ITC"; font-size:16px;
+	}
+	</style>
+</head>
+
+<body>
+ 
+            	
+
+
+
+         
+
+<a id="myAnchor" name="myAnchor"></a>
+
+<div id="wrapper"><!--start wrapper-->
+	
+	<div id="header"><!--start header-->
+    
+		<div id="header-inner">
+			
+			<div id="logo">
+		<img src="images/logo.png" alt="Twaran 2012"/>
+			</div>
+			<div class="clearer"></div>			
+		</div>
+	</div><!--end header-->
+
+	<!--
+     
+     -->
+	
+	<div id="content"><!--middle container-->
+		<div class="content-container">
+			<div class="content-top-blue"></div><!--container top-->
+			
+			<div class="content-inner"><!--start container inner-->
+				
+				<div id="dockContainer">
+		<div  class="sc_menu_wrapper">
+	<div style="display: block;" class="sc_menu">
+    <li><a class="dockItem" href="index.html"><img src="images/dock/home.png" alt="Home" title="Home" /></a></li>
+			<li><a class="dockItem" href="cricket.html"><img src="images/dock/outdoor.png" alt="Outdoor Events" title="Outdoor&nbsp;Events" /></a></li>
+			<li><a class="dockItem" href="badminton.html"><img src="images/dock/indoor.png" alt="Indoor&nbsp;Events" title="Indoor&nbsp;Events" /></a></li>
+			<li><a class="dockItem" href="zerolimit.html"><img src="images/dock/zero.jpg" alt="Zero&nbsp;Limit" title="Zero&nbsp;Limit" /></a></li>
+			<li><a class="dockItem" href="registration.html"><img src="images/dock/register.png" alt="Register&nbsp;Here" title="Register&nbsp;Here" /></a></li>
+			<li><a class="dockItem" href="downloads.html"><img src="images/dock/downloads.png" alt="Downloads" title="Downloads" /></a></li>
+			<li><a class="dockItem" href="hospitality.html"><img src="images/dock/hospitality.png" alt="Hospitality&nbsp;Desk"  title="Hospitality&nbsp;Desk"/></a></li>
+			<li><a class="dockItem" href="contact.html"><img src="images/dock/contact.png" alt="Contact Us" title="Contact&nbsp;Us" /></a></li>
+	   
+			
+	</div>
+<div style="display: none;" class="loading">Loading...</div><div style="opacity: 0; top: 40px; left: 80px;" class="sc_menu_tooltip"></div></div>
+
+	</div><!--end slider-->
+				
+				
+				<div class="home-top-panel clearfix"><!--start top panel-->
+			<div class="what-we-panel">
+						<h3>About Twaran 2013</h3>
+						<p><strong>Sports  are human life in microcosm, said Howard Cosell. Indeed sports are an  inevitable part of a person's life. It brings in them a spirit to win, fervor  to excel in what they do, instills a passion to fight and most importantly  makes their mind sound. </strong><br />
+					    <strong> ABV-IIITM presents an  opportunity to define your substance—Twaran 2013, the national level sports  meet.</strong></p>
+<p align="justify"> Sportsmanship has always been a symbol of friendship and unity, thus the main motive of organizing such an event on a large scale is to increase the mutual understanding and to foster the co-operation level among various institutes. Sports and academics are not isolated from each other. The great energy level makes this event a lot more exciting not only to the players but also to the audience who witness their endeavor.</p>
+<p align="center" > <strong>Get your nerves right to witness the momensum Twaran is.</strong></p>
+					</div>
+					
+					<div class="recent-work-panel">
+						<h3><b>TWARAN UPDATES</b></h3>
+						
+							<script type="text/javascript">
+
+/***********************************************
+* Fading Scroller- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at #/ for full source code
+***********************************************/
+
+var delay = 2000; //set delay between message change (in miliseconds)
+var maxsteps=30; // number of steps to take to change from start color to endcolor
+var stepdelay=40; // time in miliseconds of a single step
+//**Note: maxsteps*stepdelay will be total time in miliseconds of fading effect
+var startcolor= new Array(255,255,255); // start color (red, green, blue)
+var endcolor=new Array(0,0,0); // end color (red, green, blue)
+
+var fcontent=new Array();
+begintag='<div  style="font: normal 12px Arial; border-width:0px; width:250px">'; //set opening tag, such as font declarations
+fcontent[0]="<br/><b>TWARAN 2013</b><br><br>THIS JANUARY DEFINE YOUR SUBSTANCE!<br><br />A four days extravaganza from<br>24<sup>th</sup>-27<sup>th</sup> January, 2013<br /><br />The national level sports meet <br /><br />Hosted by | ABV-IIITM Gwalior";
+fcontent[1]="<br/><b>Registration has started for all the events.</b><br/><br/>Register your team @ Twaran 2013<br/><br/>Last date of registration : 12<sup>th</sup> January, 2013<br/><br/>Email: twaran@iiitm.ac.in<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;twaran2012@gmail.com";
+fcontent[2]="<br/><b><b>Prize Money For All</b><br/><br/>There is prize money for Every event. It will be announced soon.";
+fcontent[3]="<br/><b>Mega Event: ZeroLimit</b><br/><br/>The virtual war (The counter strike tournament)<br/><br/>Win up to 25000+ INR<br/><br/>Registration has started for ZeroLimit<br/><br/>Visit: <a href='zerolimit.html' target='_blank'>http://zerolimit.in</a>";
+closetag='</div>';
+
+var fwidth='250px'; //set scroller width
+var fheight='180px'; //set scroller height
+
+var fadelinks=1;  //should links inside scroller content also fade like text? 0 for no, 1 for yes.
+
+///No need to edit below this line/////////////////
+
+
+var ie4=document.all&&!document.getElementById;
+var DOM2=document.getElementById;
+var faderdelay=0;
+var index=0;
+
+
+/*Rafael Raposo edited function*/
+//function to change content
+function changecontent(){
+  if (index>=fcontent.length)
+    index=0
+  if (DOM2){
+    document.getElementById("fscroller").style.color="rgb("+startcolor[0]+", "+startcolor[1]+", "+startcolor[2]+")"
+    document.getElementById("fscroller").innerHTML=begintag+fcontent[index]+closetag
+    if (fadelinks)
+      linkcolorchange(1);
+    colorfade(1, 15);
+  }
+  else if (ie4)
+    document.all.fscroller.innerHTML=begintag+fcontent[index]+closetag;
+  index++
+}
+
+// colorfade() partially by Marcio Galli for Netscape Communications.  ////////////
+// Modified by Dynamicdrive.com
+
+function linkcolorchange(step){
+  var obj=document.getElementById("fscroller").getElementsByTagName("A");
+  if (obj.length>0){
+    for (i=0;i<obj.length;i++)
+      obj[i].style.color=getstepcolor(step);
+  }
+}
+
+/*Rafael Raposo edited function*/
+var fadecounter;
+function colorfade(step) {
+  if(step<=maxsteps) {	
+    document.getElementById("fscroller").style.color=getstepcolor(step);
+    if (fadelinks)
+      linkcolorchange(step);
+    step++;
+    fadecounter=setTimeout("colorfade("+step+")",stepdelay);
+  }else{
+    clearTimeout(fadecounter);
+    document.getElementById("fscroller").style.color="rgb("+endcolor[0]+", "+endcolor[1]+", "+endcolor[2]+")";
+    setTimeout("changecontent()", delay);
+	
+  }   
+}
+
+/*Rafael Raposo's new function*/
+function getstepcolor(step) {
+  var diff
+  var newcolor=new Array(3);
+  for(var i=0;i<3;i++) {
+    diff = (startcolor[i]-endcolor[i]);
+    if(diff > 0) {
+      newcolor[i] = startcolor[i]-(Math.round((diff/maxsteps))*step);
+    } else {
+      newcolor[i] = startcolor[i]+(Math.round((Math.abs(diff)/maxsteps))*step);
+    }
+  }
+  return ("rgb(" + newcolor[0] + ", " + newcolor[1] + ", " + newcolor[2] + ")");
+}
+
+if (ie4||DOM2)
+  document.write('<div id="fscroller" style="border:0px ;width:'+fwidth+';height:'+fheight+'"></div>');
+
+if (window.addEventListener)
+window.addEventListener("load", changecontent, false)
+else if (window.attachEvent)
+window.attachEvent("onload", changecontent)
+else if (document.getElementById)
+window.onload=changecontent
+
+</script>
+				
+					</div>
+				</div><!--end top panel--><!--end top panel-->
+				
+				<div class="clear"></div>
+				
+				<!--end middle panel-->
+				
+				<div class="clear"></div>
+				
+				<div class="home-bottom-panel">
+				<h4>Previous Sponsors</h4>
+						
+						
+						
+<marquee><a href="#" class="anotherclass gradualfader"><img src="images/1.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/2.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/3.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/4.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/5.jpg" /></a>
+
+<a href="#" class="anotherclass gradualfader"><img src="images/6.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/7.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/8.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/1.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/2.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/3.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/4.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/5.jpg" /></a>
+
+<a href="#" class="anotherclass gradualfader"><img src="images/6.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/7.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/8.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/1.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/2.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/3.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/4.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/5.jpg" /></a>
+
+<a href="#" class="anotherclass gradualfader"><img src="images/6.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/7.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/8.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/1.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/2.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/3.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/4.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/5.jpg" /></a>
+
+<a href="#" class="anotherclass gradualfader"><img src="images/6.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/7.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/8.jpg" /></a> 
+<a href="#" class="anotherclass gradualfader"><img src="images/1.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/2.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/3.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/4.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/5.jpg" /></a>
+
+<a href="#" class="anotherclass gradualfader"><img src="images/6.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/7.jpg" /></a>
+<a href="#" class="anotherclass gradualfader"><img src="images/8.jpg" /></a>
+</marquee>
+
+<!--end container inner-->
+			
+			<!--container bottom-->
+		</div>
+								
+			</div><!--end container inner-->
+			
+			<div class="content-bottom-grey"></div><!--container bottom-->
+		</div>
+	</div><!--end middle container-->
+   
+   
+   
+   
+	</div>
+   
+	
+	
+	<div id="footer"><!--start footer-->
+		<div class="footer-inner" style="text-align:justify">
+			<div class="footer-module" style="text-align:justify">
+				<h4>Quick Links </h4>
+				<ul id="recent-blog">
+					<li><a href="zerolimiit.html" target="_blank"><strong>Zero Limit </strong>(the counter strike tournament) </a></li>
+					<li><a href="http://iiitm.ac.in" target="_blank">About <strong>ABV-IIITM</strong></a></li>
+					<li><a href="registration.html"><strong>Register Here</strong></a></li>
+					
+				</ul>
+			</div>
+			
+			<div class="footer-module middle" style="text-align:left">
+				<h4>Mailing Info:</h4>
+				
+					<ul id="recent-blog">
+					<li><a href="#"><strong></strong>ABV-Indian Institute of Information Technology and Management, Gwalior. </a></li>
+					<li><a href="#">Morena Link Road
+
+Gwalior, Madhya Pradesh
+
+INDIA - 474010.</a></li>
+				</ul>
+					
+				
+				
+				<div class="clear"></div>
+				
+				
+			</div>
+			
+			<div class="footer-module" style="text-align:left">
+				<h4>Any Query? Mail Us</h4>
+				<ul id="recent-blog" >
+					<li><a href="mailto:twaran2013@gmail.com">Email:-<strong> twaran@iiitm.ac.in; twaran2013@gmail.com
+					
+				</ul>
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</div><!--end footer-->
+	
+	
+	<div id="base-footer"><!--start base footer-->
+		<div id="base-footer-inner">
+			<div id="base-footer-left"><p><a href="#">Twaran</a> &copy; 2013. All rights reserved. | <a href="#">Designed by</a> | <span>Web Development Team Twaran'13</span></p></div>
+			<div id="base-footer-right">
+				<ul class="base-footer-icons">
+					<li><a href="#"><img src="images/icon-facebook.png" width="24" height="24" alt="Facebook" title="Check us on Facebook" /></a></li>
+					<li><a href="#"><img src="images/icon-twitter.png" width="24" height="24" alt="Twitter" title="Follow us on Twitter" /></a></li>
+					<li><a href="#"><img src="images/icon-linkedin.png" width="24" height="24" alt="Linkedin" title="View our Linkedin Profile" /></a></li>
+					<li><a href="#"><img src="images/blog.png" width="24" height="24" alt="BlogSpot" title="View Our Blog" /></a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div><!--end base footer-->
+	
+	
+</div><!--end wrapper-->
+
+<a class="anchorLink" id="backtotop" href="#myAnchor">Back to the top</a>
+
+<script type="text/javascript"> Cufon.now(); </script>
+<script type="text/javascript">
+gradualFader.init() //activate gradual fader
+</script>
+
+</body>
+
+</html>
